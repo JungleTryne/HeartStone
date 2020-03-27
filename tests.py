@@ -1,4 +1,6 @@
 import unittest
+import time
+import random
 
 from unitSystem.unit_fabrics import UnitOneFabric, UnitTwoFabric, UnitThreeFabric, UnitFourFabric
 from heartstoneUtils.id_generator import IDGenerator
@@ -63,6 +65,30 @@ class TestUnitSystem(unittest.TestCase):
         self.assertTrue(right.is_alive())
 
 
+class TestUnitSystemStress(unittest.TestCase):
+
+    def testAttackOne(self):
+        unit_fabric = UnitOneFabric()
+        _units = list()
+        for i in range(0, 1000000):
+            _units.append(unit_fabric.get_card())
+
+        time_start = time.time()
+
+        unit_fabric_one = UnitOneFabric()
+        unit_fabric_three = UnitThreeFabric()
+        left = unit_fabric_one.get_card()
+        right = unit_fabric_three.get_card()
+        left.attack(right)
+        self.assertTrue(left.is_alive())
+        left.attack(right)
+        self.assertTrue(not left.is_alive())
+        self.assertTrue(right.is_alive())
+
+        time_finish = time.time()
+        print("TestUnitSystemStress.TestUnitSystem.testAttackOne time: {0} ms".format((time_finish-time_start)*1e3))
+
+
 class TestIDSystem(unittest.TestCase):
     def testIDGeneration(self):
         unit_fabric = UnitOneFabric()
@@ -79,6 +105,7 @@ class TestStressFactory(unittest.TestCase):
         units = list()
         for i in range(0, 1000000):
             units.append(unit_fabric.get_card())
+        random.shuffle(units)
         assert (len(IDGenerator()._generated_ids) == 1000000)
         del units
         assert (len(IDGenerator()._generated_ids) == 0)
