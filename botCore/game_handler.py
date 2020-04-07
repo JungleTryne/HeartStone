@@ -7,7 +7,7 @@ class GameHandler(CommandExecutor):
     """
 
     @staticmethod
-    def execute_command(command, user) -> list:
+    def execute_command(command) -> list:
         pass
 
 class AttackCommandExecutor(CommandExecutor):
@@ -16,7 +16,7 @@ class AttackCommandExecutor(CommandExecutor):
     """
 
     @staticmethod
-    def execute_command(command, user) -> list:
+    def execute_command(command) -> list:
         pass
 
 
@@ -26,7 +26,7 @@ class PlaceCommandExecutor(CommandExecutor):
     """
 
     @staticmethod
-    def execute_command(command, user) -> list:
+    def execute_command(command) -> list:
         pass
 
 
@@ -36,5 +36,5 @@ class NextCommandExecutor(CommandExecutor):
     """
 
     @staticmethod
-    def execute_command(command, user) -> list:
+    def execute_command(command) -> list:
         pass

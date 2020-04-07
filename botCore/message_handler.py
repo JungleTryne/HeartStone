@@ -13,7 +13,7 @@ class MessageHandler():
         pass
 
     @staticmethod
-    def handle_command(command, user) -> list:
+    def handle_command(command) -> list:
         """
         Непосредственная обработка команды
         """
@@ -26,5 +26,5 @@ class CommandExecutor():
     """
 
     @staticmethod
-    def execute_command(command, user) -> list:
+    def execute_command(command) -> list:
         pass

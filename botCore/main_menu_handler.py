@@ -7,7 +7,7 @@ class MainMenuHandler(CommandExecutor):
     """
 
     @staticmethod
-    def execute_command(command, user) -> list:
+    def execute_command(command) -> list:
         pass
 
 
@@ -17,7 +17,7 @@ class PickCardExecutor(CommandExecutor):
     """
 
     @staticmethod
-    def execute_command(command, user) -> list:
+    def execute_command(command) -> list:
         pass
 
 
@@ -27,7 +27,7 @@ class RemoveCardExecutor(CommandExecutor):
     """
 
     @staticmethod
-    def execute_command(command, user) -> list:
+    def execute_command(command) -> list:
         pass
 
 
@@ -37,5 +37,15 @@ class NewUserExecutor(CommandExecutor):
     """
 
     @staticmethod
-    def execute_command(command, user) -> list:
+    def execute_command(command) -> list:
+        pass
+
+
+class NewGameExecutor(CommandExecutor):
+    """
+    Обработка команды создания новой игры
+    """
+
+    @staticmethod
+    def execute_command(command) -> list:
         pass

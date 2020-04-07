@@ -7,7 +7,7 @@ class UnknownCommandHandler(CommandExecutor):
     """
 
     @staticmethod
-    def execute_command(command, user) -> list:
+    def execute_command(command) -> list:
         pass
 
 class UnknowCommandExecutor(CommandExecutor):
@@ -16,5 +16,5 @@ class UnknowCommandExecutor(CommandExecutor):
     """
 
     @staticmethod
-    def execute_command(command, user) -> list:
+    def execute_command(command) -> list:
         pass
