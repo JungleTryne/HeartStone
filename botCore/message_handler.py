@@ -1,4 +1,4 @@
-class MessageHandler():
+class MessageHandler:
     """
     Класс обработки сообщения пользователя.
     Является статическим
@@ -20,7 +20,7 @@ class MessageHandler():
         pass
 
 
-class CommandExecutor():
+class CommandExecutor:
     """
     Абстрактный класс обработки команд
     """
