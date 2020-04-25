@@ -63,6 +63,9 @@ class ChangeFractionCommand(MenuCommand):
 
 
 class ChangeFractionCommandFactory(MenuCommandFactory):
+    """
+    Команда смены фракции игрока
+    """
     def __init__(self):
         super().__init__()
 
@@ -77,6 +80,9 @@ class ChangeFractionCommandFactory(MenuCommandFactory):
 
 
 class PickCardCommandFactory(MenuCommandFactory):
+    """
+    Команда выбора карты в колоду
+    """
     def __init__(self):
         super().__init__()
 
@@ -95,6 +101,9 @@ class PickCardCommandFactory(MenuCommandFactory):
 
 
 class CreateGameCommandFactory(MenuCommandFactory):
+    """
+    Команда создания игры
+    """
     def __init__(self):
         super().__init__()
 

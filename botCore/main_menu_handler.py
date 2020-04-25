@@ -1,6 +1,8 @@
 from botCore.command_executor import CommandExecutor
+
 from commandSystem.main_menu_command import PickCardCommand,\
     RemoveCardCommand, CreateGameCommand, ChangeFractionCommand
+
 from botCore.message_answer import MessageAnswer
 from dataBase.database import DataBaseProxy
 from botCore.game import Game
@@ -10,6 +12,19 @@ class WrongPlace(Exception):
     pass
 
 
+def in_game_checker(func):
+    """
+    Декоратор проверяет, чтобы функция работала, если только игрок
+    не находтся в игре
+    """
+    def wrapper(command):
+        if command.player.current_game is not None:
+            return [MessageAnswer(command.player,
+                                  'Нельзя изменять игрока во время игры')]
+        return func(command)
+    return wrapper
+
+
 class MainMenuHandler(CommandExecutor):
     """
     Класс обработки команд, вызванных в главном меню игры
@@ -17,10 +32,6 @@ class MainMenuHandler(CommandExecutor):
 
     @staticmethod
     def execute_command(command) -> list:
-        if command.player.current_game is not None:
-            return [MessageAnswer(command.player,
-                                  'Нельзя изменять игрока во время игры')]
-
         if isinstance(command, PickCardCommand):
             return PickCardExecutor.execute_command(command)
         if isinstance(command, RemoveCardCommand):
@@ -37,6 +48,7 @@ class ChangeFractionExecutor(CommandExecutor):
     Класс обработки команды смены фракции
     """
     @staticmethod
+    @in_game_checker
     def execute_command(command) -> list:
         if not command.fraction:
             return [MessageAnswer(command.player,
@@ -55,6 +67,7 @@ class PickCardExecutor(CommandExecutor):
     """
 
     @staticmethod
+    @in_game_checker
     def execute_command(command) -> list:
         if not command.card_factory:
             return [MessageAnswer(command.player,
@@ -76,6 +89,7 @@ class RemoveCardExecutor(CommandExecutor):
     """
 
     @staticmethod
+    @in_game_checker
     def execute_command(command) -> list:
         try:
             command.player.card_set_selected.remove(command.card_factory)
@@ -94,6 +108,7 @@ class NewGameExecutor(CommandExecutor):
     """
 
     @staticmethod
+    @in_game_checker
     def execute_command(command: CreateGameCommand) -> list:
         if command.second_player is None:
             return [MessageAnswer(command.player,

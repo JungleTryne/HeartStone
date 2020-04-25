@@ -33,6 +33,12 @@ class MessageHandler:
 
     @staticmethod
     def handle_command(command) -> list:
+        """
+        Обработка уже готового запроса. Сырые данные были обработаны
+        в handle_request, теперь работаем с внутренними классами
+
+        Обработка запроса выполняется по принципу компоновщика
+        """
         if isinstance(command, MenuCommand):
             return MainMenuHandler.execute_command(command)
         elif isinstance(command, GameCommand):
