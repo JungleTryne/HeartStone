@@ -54,9 +54,6 @@ class GameCommandFactory(CommandFactory):
     def __init__(self):
         super().__init__()
 
-    def get_command(self, user, parameters=None):
-        pass
-
 
 class NextCommandFactory(GameCommandFactory):
     """

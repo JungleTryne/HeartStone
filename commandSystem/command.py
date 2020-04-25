@@ -14,6 +14,9 @@ class CommandFactory:
     def __init__(self):
         pass
 
+    def get_command(self, user, *parameters):
+        pass
+
 
 class ParsingException(Exception):
     """Исключение ошибки распознавания команды"""

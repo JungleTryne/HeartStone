@@ -1,4 +1,5 @@
 from commandSystem.command import Command
+from commandSystem.command import CommandFactory
 
 
 class MenuCommand(Command):
@@ -8,6 +9,11 @@ class MenuCommand(Command):
 
     def __init__(self, player):
         super().__init__(player)
+
+
+class MenuCommandFactory(CommandFactory):
+    def __init__(self):
+        super().__init__()
 
 
 class PickCardCommand(MenuCommand):
@@ -47,3 +53,36 @@ class CreateGameCommand(MenuCommand):
     def __init__(self, player, second_player):
         super().__init__(player)
         self.second_player = second_player
+
+
+class PickCardCommandFactory(MenuCommandFactory):
+    def __init__(self):
+        super().__init__()
+
+    def get_command(self, user, *parameters):
+        raise NotImplementedError
+
+
+class NewUserCommandFactory(MenuCommandFactory):
+    def __init__(self):
+        super().__init__()
+
+    def get_command(self, user, *parameters):
+        raise NotImplementedError
+
+
+class CreateGameCommandFactory(MenuCommandFactory):
+    def __init__(self):
+        super().__init__()
+
+    def get_command(self, user, *parameters):
+        raise NotImplementedError
+
+
+class RemoveCardCommandFactory(MenuCommandFactory):
+    def __init__(self):
+        super().__init__()
+
+    def get_command(self, user, *parameters):
+        raise NotImplementedError
+

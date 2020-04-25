@@ -1,8 +1,6 @@
-from commandSystem.command import Command
-
 from commandSystem.game_commands import AttackCommandFactory, PutCardCommandFactory, NextCommandFactory
-from commandSystem.main_menu_command import PickCardCommand, CreateGameCommand, NewUserCommand, RemoveCardCommand
-from commandSystem.unknown_command import UnknowCommand
+from commandSystem.main_menu_command import PickCardCommandFactory, CreateGameCommandFactory, NewUserCommandFactory, RemoveCardCommandFactory
+from commandSystem.unknown_command import UnknownCommand
 
 from commandSystem.command import ParsingException
 
@@ -18,10 +16,10 @@ class CommandCreatorHandler:
         '/next': NextCommandFactory,
 
         # Main menu commands
-        '/pick_card': PickCardCommand,
-        '/create_game': CreateGameCommand,
-        '/register': NewUserCommand,
-        '/remove_card': RemoveCardCommand
+        '/pick_card': PickCardCommandFactory,
+        '/create_game': CreateGameCommandFactory,
+        '/register': NewUserCommandFactory,
+        '/remove_card': RemoveCardCommandFactory,
     }
 
     @staticmethod
@@ -31,4 +29,4 @@ class CommandCreatorHandler:
             command = router[message[0]].get_command(user, message[1:])
             return command
         except ParsingException:
-            return UnknowCommand()
+            return UnknownCommand()

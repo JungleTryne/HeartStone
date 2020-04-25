@@ -1,7 +1,7 @@
 from commandSystem.command import Command
 
 
-class UnknowCommand(Command):
+class UnknownCommand(Command):
     """
     Класс неизвестной комманды
     """
