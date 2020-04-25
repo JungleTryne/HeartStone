@@ -18,8 +18,9 @@ class MessageHandler:
     @staticmethod
     def handle_request(message: str, vk_id: str) -> list:
         """
-        Обработка сырого запроса. Использует СommandCreatorHandler, чтобы получить
-        объект команды пользователя для последующей передачи в handle_command
+        Обработка сырого запроса. Использует СommandCreatorHandler,
+        чтобы получить объект команды пользователя для последующей
+        передачи в handle_command
         """
         message = message.split()
         db = DataBaseProxy()
@@ -30,7 +31,6 @@ class MessageHandler:
         answers = MessageHandler.handle_command(command)
         return answers
 
-
     @staticmethod
     def handle_command(command) -> list:
         if isinstance(command, MenuCommand):
@@ -38,4 +38,3 @@ class MessageHandler:
         elif isinstance(command, GameCommand):
             return GameHandler.execute_command(command)
         return UnknownCommandHandler.execute_command(command)
-

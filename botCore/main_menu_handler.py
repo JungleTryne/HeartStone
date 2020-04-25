@@ -1,5 +1,6 @@
 from botCore.command_executor import CommandExecutor
-from commandSystem.main_menu_command import PickCardCommand, RemoveCardCommand, CreateGameCommand, ChangeFractionCommand
+from commandSystem.main_menu_command import PickCardCommand,\
+    RemoveCardCommand, CreateGameCommand, ChangeFractionCommand
 from botCore.message_answer import MessageAnswer
 from dataBase.database import DataBaseProxy
 from botCore.game import Game
@@ -17,7 +18,8 @@ class MainMenuHandler(CommandExecutor):
     @staticmethod
     def execute_command(command) -> list:
         if command.player.current_game is not None:
-            return [MessageAnswer(command.player, 'Нельзя изменять игрока во время игры')]
+            return [MessageAnswer(command.player,
+                                  'Нельзя изменять игрока во время игры')]
 
         if isinstance(command, PickCardCommand):
             return PickCardExecutor.execute_command(command)
@@ -37,12 +39,14 @@ class ChangeFractionExecutor(CommandExecutor):
     @staticmethod
     def execute_command(command) -> list:
         if not command.fraction:
-            return [MessageAnswer(command.player, 'Ошибка в ChangeFractionExecutor')]
+            return [MessageAnswer(command.player,
+                                  'Ошибка в ChangeFractionExecutor')]
         command.player.fraction = command.fraction
         command.player.card_set_selected = list()
         db = DataBaseProxy()
         db.update_user(command.player.vk_id, command.player)
-        return [MessageAnswer(command.player, 'Фракция успешно изменена')]
+        return [MessageAnswer(command.player,
+                              'Фракция успешно изменена')]
 
 
 class PickCardExecutor(CommandExecutor):
@@ -53,14 +57,17 @@ class PickCardExecutor(CommandExecutor):
     @staticmethod
     def execute_command(command) -> list:
         if not command.card_factory:
-            return [MessageAnswer(command.player, 'Ошибка в PickCardExecutor')]
+            return [MessageAnswer(command.player,
+                                  'Ошибка в PickCardExecutor')]
         if command.card_factory in command.player.card_set_selected:
-            return [MessageAnswer(command.player, 'Карта уже в колоде')]
+            return [MessageAnswer(command.player,
+                                  'Карта уже в колоде')]
 
         command.player.card_set_selected.append(command.card_factory)
         db = DataBaseProxy()
         db.update_user(command.player.vk_id, command.player)
-        return [MessageAnswer(command.player, 'Карта успешно добавлена в колоду')]
+        return [MessageAnswer(command.player,
+                              'Карта успешно добавлена в колоду')]
 
 
 class RemoveCardExecutor(CommandExecutor):
@@ -77,7 +84,8 @@ class RemoveCardExecutor(CommandExecutor):
 
         db = DataBaseProxy()
         db.update_user(command.player.vk_id, command.player)
-        return [MessageAnswer(command.player, 'Карта успешно удалена из колоды')]
+        return [MessageAnswer(command.player,
+                              'Карта успешно удалена из колоды')]
 
 
 class NewGameExecutor(CommandExecutor):
@@ -88,7 +96,8 @@ class NewGameExecutor(CommandExecutor):
     @staticmethod
     def execute_command(command: CreateGameCommand) -> list:
         if command.second_player is None:
-            return [MessageAnswer(command.player, 'Второй игрок не найден')]
+            return [MessageAnswer(command.player,
+                                  'Второй игрок не найден')]
 
         command.player.hp_rate = 100
         command.second_player.hp_rate = 100
@@ -102,5 +111,7 @@ class NewGameExecutor(CommandExecutor):
         db.update_user(command.player.vk_id, command.player)
         db.update_user(command.second_player.vk_id, command.second_player)
 
-        return [MessageAnswer(command.player, 'Игра началась'),
-                MessageAnswer(command.second_player, 'Игра началась')]
+        return [MessageAnswer(command.player,
+                              'Игра началась'),
+                MessageAnswer(command.second_player,
+                              'Игра началась')]

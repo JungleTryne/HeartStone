@@ -10,6 +10,7 @@ class GameHandler(CommandExecutor):
     def execute_command(command) -> list:
         pass
 
+
 class AttackCommandExecutor(CommandExecutor):
     """
     Класс обработки команды атаки на карточку противника

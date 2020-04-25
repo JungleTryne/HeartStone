@@ -2,12 +2,15 @@ import unittest
 import time
 import random
 
-from unitSystem.unit_fabrics import UnitOneFabric, UnitTwoFabric, UnitThreeFabric, UnitFourFabric
+from unitSystem.unit_fabrics import UnitOneFabric, UnitTwoFabric,\
+    UnitThreeFabric, UnitFourFabric
 from unitSystem.fraction_one import UnitFractionOne
 from unitSystem.fraction_two import UnitFractionTwo
 from heartstoneUtils.id_generator import IDGenerator
 
 from botCore.message_handler import MessageHandler
+from dataBase.database import DataBaseProxy
+
 
 class TestFabricSystem(unittest.TestCase):
 
@@ -88,7 +91,9 @@ class TestUnitSystemStress(unittest.TestCase):
         self.assertTrue(right.is_alive())
 
         time_finish = time.time()
-        print("TestUnitSystemStress.TestUnitSystem.testAttackOne time: {0} ms".format((time_finish-time_start)*1e3))
+        print("TestUnitSystemStress.TestUnitSystem."
+              "testAttackOne time: {0} ms"
+              .format((time_finish - time_start) * 1e3))
 
 
 class TestIDSystem(unittest.TestCase):
@@ -98,7 +103,7 @@ class TestIDSystem(unittest.TestCase):
         card_id = unit.card_id
         assert (card_id in IDGenerator()._generated_ids)
         del unit
-        assert (not card_id in IDGenerator()._generated_ids)
+        assert (card_id not in IDGenerator()._generated_ids)
 
 
 class TestStressFactory(unittest.TestCase):
@@ -125,7 +130,12 @@ class TestMenuCommands(unittest.TestCase):
         assert (player_two.card_set_selected == [UnitThreeFabric, UnitFourFabric])
         assert (player_one.fraction == UnitFractionOne)
         assert (player_two.fraction == UnitFractionTwo)
-
+        MessageHandler.handle_request('/create_game 456', '123')
+        db = DataBaseProxy()
+        user_1 = db.get_user_by_vk_id('123')
+        user_2 = db.get_user_by_vk_id('456')
+        message = MessageHandler.handle_request('/pick_card two', '123')[0]
+        assert ('Нельзя изменять игрока во время игры' == message.message)
 
 
 if __name__ == '__main__':

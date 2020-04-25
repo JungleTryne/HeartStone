@@ -1,6 +1,7 @@
 from botCore.user import User
 from unitSystem.fraction_one import UnitFractionOne
 
+
 class DataBaseProxy:
     class __DataBaseProxy:
         """

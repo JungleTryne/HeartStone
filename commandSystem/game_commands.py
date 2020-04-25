@@ -81,7 +81,8 @@ class AttackCommandFactory(GameCommandFactory):
     def get_command(self, user, parameters=None):
         db = DataBaseProxy()
         game = db.get_users_game(user)
-        command = AttackCommand(user, game, UnitDeserializer.deserialize(parameters[0]),
+        command = AttackCommand(user, game, UnitDeserializer
+                                .deserialize(parameters[0]),
                                 UnitDeserializer.deserialize(parameters[1]))
         return command
 
@@ -97,5 +98,6 @@ class PutCardCommandFactory(GameCommandFactory):
     def get_command(self, user, parameters=None):
         db = DataBaseProxy()
         game = db.get_users_game(user)
-        command = PutCardCommand(user, game, UnitDeserializer.deserialize(parameters[0]))
+        command = PutCardCommand(user, game, UnitDeserializer
+                                 .deserialize(parameters[0]))
         return command

@@ -6,9 +6,9 @@ class UnitDeserializer:
     @staticmethod
     def deserialize(card_name: str):
         router = {
-            'one' : UnitOne,
-            'two' : UnitTwo,
-            'three' : UnitThree,
-            'four' : UnitFour
+            'one': UnitOne,
+            'two': UnitTwo,
+            'three': UnitThree,
+            'four': UnitFour
         }
         return router[card_name]

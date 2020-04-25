@@ -2,7 +2,8 @@ from commandSystem.command import Command
 from commandSystem.command import CommandFactory
 from unitSystem.fraction_one import UnitFractionOne
 from unitSystem.fraction_two import UnitFractionTwo
-from unitSystem.unit_fabrics import UnitOneFabric, UnitTwoFabric, UnitThreeFabric, UnitFourFabric
+from unitSystem.unit_fabrics import UnitOneFabric, UnitTwoFabric, \
+    UnitThreeFabric, UnitFourFabric
 
 from dataBase.database import DataBaseProxy
 
@@ -39,6 +40,7 @@ class RemoveCardCommand(MenuCommand):
     def __init__(self, player, card_factory):
         super().__init__(player)
         self.card_factory = card_factory
+
 
 class CreateGameCommand(MenuCommand):
     """
@@ -91,6 +93,7 @@ class PickCardCommandFactory(MenuCommandFactory):
             return PickCardCommand(user, UnitFourFabric)
         return PickCardCommand(user, None)
 
+
 class CreateGameCommandFactory(MenuCommandFactory):
     def __init__(self):
         super().__init__()
@@ -119,6 +122,3 @@ class RemoveCardCommandFactory(MenuCommandFactory):
         if user.fraction == UnitFractionTwo and parameters[0] == "four":
             return RemoveCardCommand(user, UnitFourFabric)
         return RemoveCardCommand(user, None)
-
-
-

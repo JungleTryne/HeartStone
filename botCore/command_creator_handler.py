@@ -1,16 +1,18 @@
-from commandSystem.game_commands import AttackCommandFactory, PutCardCommandFactory, NextCommandFactory
-from commandSystem.main_menu_command import PickCardCommandFactory, CreateGameCommandFactory, \
-    RemoveCardCommandFactory, ChangeFractionCommandFactory
+from commandSystem.game_commands import AttackCommandFactory, \
+    PutCardCommandFactory, NextCommandFactory
+
+from commandSystem.main_menu_command import PickCardCommandFactory, \
+    CreateGameCommandFactory, RemoveCardCommandFactory, \
+    ChangeFractionCommandFactory
 
 from commandSystem.unknown_command import UnknownCommand
-
-from commandSystem.command import ParsingException
 
 
 class CommandCreatorHandler:
     """
     Класс обработки сырого сообщения, возвращается объект Command
     """
+
     @staticmethod
     def get_command(message, user):
         router = {

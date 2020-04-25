@@ -10,7 +10,8 @@ class UnknownCommandHandler(CommandExecutor):
     def execute_command(command) -> list:
         pass
 
-class UnknowCommandExecutor(CommandExecutor):
+
+class UnknownCommandExecutor(CommandExecutor):
     """
     Класс отправки сообщения об ошибке о неизвестной команде
     """
