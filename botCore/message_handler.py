@@ -16,11 +16,12 @@ class MessageHandler:
     """
 
     @staticmethod
-    def handle_request(message, vk_id) -> list:
+    def handle_request(message: str, vk_id: str) -> list:
         """
         Обработка сырого запроса. Использует СommandCreatorHandler, чтобы получить
         объект команды пользователя для последующей передачи в handle_command
         """
+        message = message.split()
         db = DataBaseProxy()
         handler = CommandCreatorHandler()
         user = db.get_user_by_vk_id(vk_id)

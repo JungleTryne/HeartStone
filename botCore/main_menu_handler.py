@@ -1,4 +1,12 @@
 from botCore.message_handler import CommandExecutor
+from commandSystem.main_menu_command import PickCardCommand, RemoveCardCommand, NewUserCommand, CreateGameCommand
+from botCore.message_answer import MessageAnswer
+from dataBase.database import DataBaseProxy
+from botCore.game import Game
+
+
+class WrongPlace(Exception):
+    pass
 
 
 class MainMenuHandler(CommandExecutor):
@@ -8,7 +16,15 @@ class MainMenuHandler(CommandExecutor):
 
     @staticmethod
     def execute_command(command) -> list:
-        pass
+        if isinstance(command, PickCardCommand):
+            return PickCardExecutor.execute_command(command)
+        if isinstance(command, RemoveCardCommand):
+            return RemoveCardExecutor.execute_command(command)
+        if isinstance(command, NewUserCommand):
+            return NewUserExecutor.execute_command(command)
+        if isinstance(command, CreateGameCommand):
+            return NewGameExecutor.execute_command(command)
+        raise WrongPlace
 
 
 class PickCardExecutor(CommandExecutor):
@@ -18,7 +34,10 @@ class PickCardExecutor(CommandExecutor):
 
     @staticmethod
     def execute_command(command) -> list:
-        pass
+        command.player.card_set_selected.append(command.card_factory)
+        db = DataBaseProxy()
+        db.update_user(command.player.vk_id, command.player)
+        return [MessageAnswer(command.user, 'Карта успешно добавлена в колоду')]
 
 
 class RemoveCardExecutor(CommandExecutor):
@@ -28,7 +47,14 @@ class RemoveCardExecutor(CommandExecutor):
 
     @staticmethod
     def execute_command(command) -> list:
-        pass
+        try:
+            command.player.card_set_selected.remove(command.card_factory)
+        except:
+            pass
+
+        db = DataBaseProxy()
+        db.update_user(command.player.vk_id, command.player)
+        return [MessageAnswer(command.player, 'Карта успешно удалена из колоды')]
 
 
 class NewUserExecutor(CommandExecutor):
@@ -38,7 +64,7 @@ class NewUserExecutor(CommandExecutor):
 
     @staticmethod
     def execute_command(command) -> list:
-        pass
+        raise NotImplementedError
 
 
 class NewGameExecutor(CommandExecutor):
@@ -47,5 +73,14 @@ class NewGameExecutor(CommandExecutor):
     """
 
     @staticmethod
-    def execute_command(command) -> list:
-        pass
+    def execute_command(command: CreateGameCommand) -> list:
+        db = DataBaseProxy()
+        command.player.hp_rate = 100
+        command.second_player.hp_rate = 100
+        game = Game(command.player, command.second_player)
+        command.player.current_game = game
+        command.second_player.current_game = game
+        db.update_user(command.player.vk_id, command.player)
+        db.update_user(command.second_player.vk_id, command.second_player)
+        return [MessageAnswer(command.player, 'Игра началась'),
+                MessageAnswer(command.second_player, 'Игра началась')]

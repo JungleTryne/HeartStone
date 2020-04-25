@@ -16,12 +16,15 @@ class DataBaseProxy:
             return self.vk_dict[vk_id]
         return None
 
+    def update_user(self, vk_id, user_object):
+        self.vk_dict[vk_id] = user_object
+
     def get_users_game(self, user):
         if user in self.game_dict:
             return self.game_dict[user]
         return None
 
     def register_user(self, vk_id):
-        new_user = User(0, tuple(), tuple(), None, None)
+        new_user = User(vk_id, 0, tuple(), tuple(), None, None)
         self.vk_dict[vk_id] = new_user
         return new_user
