@@ -1,5 +1,5 @@
 from botCore.command_executor import CommandExecutor
-from commandSystem.main_menu_command import PickCardCommand, RemoveCardCommand, NewUserCommand, CreateGameCommand, ChangeFractionCommand
+from commandSystem.main_menu_command import PickCardCommand, RemoveCardCommand, CreateGameCommand, ChangeFractionCommand
 from botCore.message_answer import MessageAnswer
 from dataBase.database import DataBaseProxy
 from botCore.game import Game
@@ -23,8 +23,6 @@ class MainMenuHandler(CommandExecutor):
             return PickCardExecutor.execute_command(command)
         if isinstance(command, RemoveCardCommand):
             return RemoveCardExecutor.execute_command(command)
-        if isinstance(command, NewUserCommand):
-            return NewUserExecutor.execute_command(command)
         if isinstance(command, CreateGameCommand):
             return NewGameExecutor.execute_command(command)
         if isinstance(command, ChangeFractionCommand):
@@ -80,16 +78,6 @@ class RemoveCardExecutor(CommandExecutor):
         db = DataBaseProxy()
         db.update_user(command.player.vk_id, command.player)
         return [MessageAnswer(command.player, 'Карта успешно удалена из колоды')]
-
-
-class NewUserExecutor(CommandExecutor):
-    """
-    Обработка команды создания нового пользователя
-    """
-
-    @staticmethod
-    def execute_command(command) -> list:
-        raise NotImplementedError
 
 
 class NewGameExecutor(CommandExecutor):

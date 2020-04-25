@@ -1,5 +1,7 @@
 from commandSystem.game_commands import AttackCommandFactory, PutCardCommandFactory, NextCommandFactory
-from commandSystem.main_menu_command import PickCardCommandFactory, CreateGameCommandFactory, NewUserCommandFactory, RemoveCardCommandFactory, ChangeFractionCommandFactory
+from commandSystem.main_menu_command import PickCardCommandFactory, CreateGameCommandFactory, \
+    RemoveCardCommandFactory, ChangeFractionCommandFactory
+
 from commandSystem.unknown_command import UnknownCommand
 
 from commandSystem.command import ParsingException
@@ -20,7 +22,6 @@ class CommandCreatorHandler:
             # Main menu commands
             '/pick_card': PickCardCommandFactory,
             '/create_game': CreateGameCommandFactory,
-            '/register': NewUserCommandFactory,
             '/remove_card': RemoveCardCommandFactory,
             '/change_fraction': ChangeFractionCommandFactory,
         }

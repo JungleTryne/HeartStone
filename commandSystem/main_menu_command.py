@@ -40,16 +40,6 @@ class RemoveCardCommand(MenuCommand):
         super().__init__(player)
         self.card_factory = card_factory
 
-
-class NewUserCommand(MenuCommand):
-    """
-    Класс создания нового пользователя
-    """
-
-    def __init__(self, player=None):
-        super().__init__(player)
-
-
 class CreateGameCommand(MenuCommand):
     """
     Класс создания игры
@@ -100,15 +90,6 @@ class PickCardCommandFactory(MenuCommandFactory):
         if user.fraction == UnitFractionTwo and parameters[0] == "four":
             return PickCardCommand(user, UnitFourFabric)
         return PickCardCommand(user, None)
-
-
-class NewUserCommandFactory(MenuCommandFactory):
-    def __init__(self):
-        super().__init__()
-
-    def get_command(self, user, parameters=None):
-        raise NotImplementedError
-
 
 class CreateGameCommandFactory(MenuCommandFactory):
     def __init__(self):
