@@ -1,5 +1,5 @@
-from botCore.message_handler import CommandExecutor
-from commandSystem.main_menu_command import PickCardCommand, RemoveCardCommand, NewUserCommand, CreateGameCommand
+from botCore.command_executor import CommandExecutor
+from commandSystem.main_menu_command import PickCardCommand, RemoveCardCommand, NewUserCommand, CreateGameCommand, ChangeFractionCommand
 from botCore.message_answer import MessageAnswer
 from dataBase.database import DataBaseProxy
 from botCore.game import Game
@@ -16,6 +16,9 @@ class MainMenuHandler(CommandExecutor):
 
     @staticmethod
     def execute_command(command) -> list:
+        if command.player.current_game is not None:
+            return [MessageAnswer(command.player, 'Нельзя изменять игрока во время игры')]
+
         if isinstance(command, PickCardCommand):
             return PickCardExecutor.execute_command(command)
         if isinstance(command, RemoveCardCommand):
@@ -24,7 +27,24 @@ class MainMenuHandler(CommandExecutor):
             return NewUserExecutor.execute_command(command)
         if isinstance(command, CreateGameCommand):
             return NewGameExecutor.execute_command(command)
+        if isinstance(command, ChangeFractionCommand):
+            return ChangeFractionExecutor.execute_command(command)
         raise WrongPlace
+
+
+class ChangeFractionExecutor(CommandExecutor):
+    """
+    Класс обработки команды смены фракции
+    """
+    @staticmethod
+    def execute_command(command) -> list:
+        if not command.fraction:
+            return [MessageAnswer(command.player, 'Ошибка в ChangeFractionExecutor')]
+        command.player.fraction = command.fraction
+        command.player.card_set_selected = list()
+        db = DataBaseProxy()
+        db.update_user(command.player.vk_id, command.player)
+        return [MessageAnswer(command.player, 'Фракция успешно изменена')]
 
 
 class PickCardExecutor(CommandExecutor):
@@ -34,10 +54,15 @@ class PickCardExecutor(CommandExecutor):
 
     @staticmethod
     def execute_command(command) -> list:
+        if not command.card_factory:
+            return [MessageAnswer(command.player, 'Ошибка в PickCardExecutor')]
+        if command.card_factory in command.player.card_set_selected:
+            return [MessageAnswer(command.player, 'Карта уже в колоде')]
+
         command.player.card_set_selected.append(command.card_factory)
         db = DataBaseProxy()
         db.update_user(command.player.vk_id, command.player)
-        return [MessageAnswer(command.user, 'Карта успешно добавлена в колоду')]
+        return [MessageAnswer(command.player, 'Карта успешно добавлена в колоду')]
 
 
 class RemoveCardExecutor(CommandExecutor):

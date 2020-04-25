@@ -60,6 +60,30 @@ class CreateGameCommand(MenuCommand):
         self.second_player = second_player
 
 
+class ChangeFractionCommand(MenuCommand):
+    """
+    Команда смены фракции
+    """
+
+    def __init__(self, player, fraction):
+        super().__init__(player)
+        self.fraction = fraction
+
+
+class ChangeFractionCommandFactory(MenuCommandFactory):
+    def __init__(self):
+        super().__init__()
+
+    def get_command(self, user, parameters=None):
+        if not parameters:
+            return ChangeFractionCommand(user, None)
+        if parameters[0] == 'one':
+            return ChangeFractionCommand(user, UnitFractionOne)
+        if parameters[0] == 'two':
+            return ChangeFractionCommand(user, UnitFractionTwo)
+        return ChangeFractionCommand(user, None)
+
+
 class PickCardCommandFactory(MenuCommandFactory):
     def __init__(self):
         super().__init__()
@@ -114,4 +138,6 @@ class RemoveCardCommandFactory(MenuCommandFactory):
         if user.fraction == UnitFractionTwo and parameters[0] == "four":
             return RemoveCardCommand(user, UnitFourFabric)
         return RemoveCardCommand(user, None)
+
+
 

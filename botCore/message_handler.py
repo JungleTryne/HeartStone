@@ -23,11 +23,10 @@ class MessageHandler:
         """
         message = message.split()
         db = DataBaseProxy()
-        handler = CommandCreatorHandler()
         user = db.get_user_by_vk_id(vk_id)
         if user is None:
             user = db.register_user(vk_id)
-        command = handler.get_command(message, user)
+        command = CommandCreatorHandler.get_command(message, user)
         answers = MessageHandler.handle_command(command)
         return answers
 
@@ -40,12 +39,3 @@ class MessageHandler:
             return GameHandler.execute_command(command)
         return UnknownCommandHandler.execute_command(command)
 
-
-class CommandExecutor:
-    """
-    Абстрактный родительский класс обработки команд
-    """
-
-    @staticmethod
-    def execute_command(command) -> list:
-        pass

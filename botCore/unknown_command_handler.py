@@ -1,4 +1,4 @@
-from botCore.message_handler import CommandExecutor
+from botCore.command_executor import CommandExecutor
 
 
 class UnknownCommandHandler(CommandExecutor):
