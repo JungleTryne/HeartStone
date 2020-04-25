@@ -3,8 +3,11 @@ import time
 import random
 
 from unitSystem.unit_fabrics import UnitOneFabric, UnitTwoFabric, UnitThreeFabric, UnitFourFabric
+from unitSystem.fraction_one import UnitFractionOne
+from unitSystem.fraction_two import UnitFractionTwo
 from heartstoneUtils.id_generator import IDGenerator
 
+from botCore.message_handler import MessageHandler
 
 class TestFabricSystem(unittest.TestCase):
 
@@ -66,7 +69,6 @@ class TestUnitSystem(unittest.TestCase):
 
 
 class TestUnitSystemStress(unittest.TestCase):
-
     def testAttackOne(self):
         unit_fabric = UnitOneFabric()
         _units = list()
@@ -109,6 +111,21 @@ class TestStressFactory(unittest.TestCase):
         assert (len(IDGenerator()._generated_ids) == 1000000)
         del units
         assert (len(IDGenerator()._generated_ids) == 0)
+
+
+class TestMenuCommands(unittest.TestCase):
+    def testMenuCommands(self):
+        MessageHandler.handle_request('/pick_card two', '123')
+        player_one = MessageHandler.handle_request('/pick_card one', '123')[0].user
+        MessageHandler.handle_request('hello', '456')
+        MessageHandler.handle_request('/change_fraction two', '456')
+        MessageHandler.handle_request('/pick_card three', '456')
+        player_two = MessageHandler.handle_request('/pick_card four', '456')[0].user
+        assert (player_one.card_set_selected == [UnitTwoFabric, UnitOneFabric])
+        assert (player_two.card_set_selected == [UnitThreeFabric, UnitFourFabric])
+        assert (player_one.fraction == UnitFractionOne)
+        assert (player_two.fraction == UnitFractionTwo)
+
 
 
 if __name__ == '__main__':

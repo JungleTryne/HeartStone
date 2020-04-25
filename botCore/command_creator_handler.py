@@ -29,5 +29,5 @@ class CommandCreatorHandler:
             factory = router[message[0]]
             command = factory().get_command(user, message[1:])
             return command
-        except ParsingException:
-            return UnknownCommand()
+        except:
+            return UnknownCommand(user)

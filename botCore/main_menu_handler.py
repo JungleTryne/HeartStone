@@ -87,13 +87,20 @@ class NewGameExecutor(CommandExecutor):
 
     @staticmethod
     def execute_command(command: CreateGameCommand) -> list:
-        db = DataBaseProxy()
+        if command.second_player is None:
+            return [MessageAnswer(command.player, 'Второй игрок не найден')]
+
         command.player.hp_rate = 100
         command.second_player.hp_rate = 100
+
         game = Game(command.player, command.second_player)
+
         command.player.current_game = game
         command.second_player.current_game = game
+
+        db = DataBaseProxy()
         db.update_user(command.player.vk_id, command.player)
         db.update_user(command.second_player.vk_id, command.second_player)
+
         return [MessageAnswer(command.player, 'Игра началась'),
                 MessageAnswer(command.second_player, 'Игра началась')]
