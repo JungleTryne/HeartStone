@@ -23,9 +23,7 @@ class DataBaseProxy:
             self.vk_dict[vk_id] = user_object
 
         def get_users_game(self, user):
-            if user in self.game_dict:
-                return self.game_dict[user]
-            return None
+            return user.current_game
 
         def register_user(self, vk_id):
             new_user = User(vk_id, UnitFractionOne, list(), list(), None, None)

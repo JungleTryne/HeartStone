@@ -43,4 +43,5 @@ class MessageHandler:
             return MainMenuHandler.execute_command(command)
         elif isinstance(command, GameCommand):
             return GameHandler.execute_command(command)
+
         return UnknownCommandHandler.execute_command(command)

@@ -5,4 +5,5 @@ class UnknownCommand(Command):
     """
     Класс неизвестной комманды
     """
-    pass
+    def __init__(self, user):
+        self.user = user

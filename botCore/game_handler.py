@@ -5,6 +5,10 @@ from dataBase.database import DataBaseProxy
 from commandSystem.game_commands import *
 
 
+class WrongPlace(Exception):
+    pass
+
+
 class GameHandler(CommandExecutor):
     """
     Класс обработки команд, вызванных во время игры
@@ -12,7 +16,13 @@ class GameHandler(CommandExecutor):
 
     @staticmethod
     def execute_command(command) -> list:
-        pass
+        if isinstance(command, PutCardCommand):
+            return PlaceCommandExecutor.execute_command(command)
+        if isinstance(command, NextCommand):
+            return NextCommandExecutor.execute_command(command)
+        if isinstance(command, AttackCommand):
+            return AttackCommandExecutor.execute_command(command)
+        raise WrongPlace
 
 
 class AttackCommandExecutor(CommandExecutor):
@@ -27,6 +37,9 @@ class AttackCommandExecutor(CommandExecutor):
         game = command.game
         attacker = command.player
         defender = None
+
+        if game.turn is not command.player:
+            return [MessageAnswer(attacker, 'Не ваш ход!')]
 
         if command.player is game.user_one:
             defender = game.user_two
@@ -78,18 +91,11 @@ class PlaceCommandExecutor(CommandExecutor):
 
     @staticmethod
     def execute_command(command) -> list:
-        card_fabric = command.attacking_card
-
-        if not card_fabric:
-            return [MessageAnswer(command.player, 'Я не понял название карты')]
-
-        if card_fabric not in command.player.card_set_selected:
-            return [MessageAnswer(command.player, 'У вас нет такой карты в колоде!')]
-
-        command.player.current_game.field.append(card_fabric.get_card())
-
         defender = None
         game = command.game
+
+        if game.turn is not command.player:
+            return [MessageAnswer(command.player, 'Не ваш ход!')]
 
         if command.player is game.user_one:
             defender = game.user_two
@@ -97,6 +103,16 @@ class PlaceCommandExecutor(CommandExecutor):
             defender = game.user_one
 
         game.turn = defender
+        card_fabric_class = command.attacking_card
+        if not card_fabric_class:
+            return [MessageAnswer(command.player, 'Я не понял название карты')]
+
+        if card_fabric_class not in command.player.card_set_selected:
+            return [MessageAnswer(command.player, 'У вас нет такой карты в колоде!')]
+
+        card_fabric = card_fabric_class()
+
+        command.player.current_game.field.append(card_fabric.get_card())
 
         return [MessageAnswer(command.player, 'Вы положили карту на стол'),
                 MessageAnswer(defender, 'Противник положил карту на стол')]
@@ -116,6 +132,9 @@ class NextCommandExecutor(CommandExecutor):
             defender = game.user_two
         else:
             defender = game.user_one
+
+        if game.turn is not command.player:
+            return [MessageAnswer(command.player, 'Не ваш ход!')]
 
         game.turn = defender
         return [MessageAnswer(game.user_one, 'Ход перешел другому игроку'),

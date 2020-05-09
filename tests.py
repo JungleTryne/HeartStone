@@ -138,5 +138,35 @@ class TestMenuCommands(unittest.TestCase):
         assert ('Нельзя изменять игрока во время игры' == message.message)
 
 
+class TestGameCommands(unittest.TestCase):
+    def testGameCommands(self):
+        MessageHandler.handle_request('hello', '456')
+        MessageHandler.handle_request('hello', '123')
+
+        MessageHandler.handle_request('/pick_card one', '123')
+
+        MessageHandler.handle_request('/change_fraction two', '456')
+        MessageHandler.handle_request('/pick_card three', '456')
+
+        MessageHandler.handle_request('/create_game 456', '123')[0].message
+
+        #testing that the players can't do anything if it is not his turn
+        self.assertEqual(MessageHandler.handle_request('/put one', '456')[0].message, 'Не ваш ход!')
+        self.assertEqual(MessageHandler.handle_request('/attack one one', '456')[0].message, 'Не ваш ход!')
+        self.assertEqual(MessageHandler.handle_request('/next', '456')[0].message, 'Не ваш ход!')
+
+        messages = MessageHandler.handle_request('/next', '123')
+        self.assertEqual(messages[0].message, 'Ход перешел другому игроку')
+        self.assertEqual(len(messages), 2)
+
+        self.assertEqual(MessageHandler.handle_request('/put one', '123')[0].message, 'Не ваш ход!')
+
+        self.assertEqual(MessageHandler.handle_request('/put three', '456')[0].message, 'Вы положили карту на стол')
+        self.assertEqual(MessageHandler.handle_request('/put one', '456')[0].message, 'Не ваш ход!')
+
+        self.assertEqual(MessageHandler.handle_request('/attack player', '123')[0].message, '')
+
+
+
 if __name__ == '__main__':
     unittest.main()

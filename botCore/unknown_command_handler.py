@@ -1,4 +1,5 @@
 from botCore.command_executor import CommandExecutor
+from botCore.message_answer import MessageAnswer
 
 
 class UnknownCommandHandler(CommandExecutor):
@@ -8,7 +9,7 @@ class UnknownCommandHandler(CommandExecutor):
 
     @staticmethod
     def execute_command(command) -> list:
-        pass
+        return UnknownCommandExecutor.execute_command(command)
 
 
 class UnknownCommandExecutor(CommandExecutor):
@@ -18,4 +19,4 @@ class UnknownCommandExecutor(CommandExecutor):
 
     @staticmethod
     def execute_command(command) -> list:
-        pass
+        return [MessageAnswer(command.user, 'Неизвестная команда!')]
