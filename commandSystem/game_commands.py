@@ -3,7 +3,7 @@ from commandSystem.command import CommandFactory
 
 from dataBase.database import DataBaseProxy
 
-from unitSystem.unit_deserialization import UnitDeserializer
+from unitSystem.unit_deserialization import UnitDeserializer, UnitCreatorDeserializer
 
 
 class GameCommand(Command):
@@ -98,6 +98,6 @@ class PutCardCommandFactory(GameCommandFactory):
     def get_command(self, user, parameters=None):
         db = DataBaseProxy()
         game = db.get_users_game(user)
-        command = PutCardCommand(user, game, UnitDeserializer
+        command = PutCardCommand(user, game, UnitCreatorDeserializer
                                  .deserialize(parameters[0]))
         return command
