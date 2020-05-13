@@ -10,7 +10,8 @@ class Unit:
     :param: card_id уникальный ID карточки
     """
 
-    def __init__(self, hp_rate: int, attack_rate: int, mana_rate: int, card_id: int):
+    def __init__(self, hp_rate: int, attack_rate: int,
+                 mana_rate: int, card_id: int):
         self.hp_rate = hp_rate
         self.attack_rate = attack_rate
         self.mana_rate = mana_rate

@@ -1,3 +1,6 @@
+from botCore.message_handler import MessageHandler
+
+
 def main():
     pass
 
