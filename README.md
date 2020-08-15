@@ -10,8 +10,8 @@ UML-диаграмме:
 https://drive.google.com/file/d/1urGQSx-RH-O1MI1jQ_XQ0S5f4oSeEw1d/view?usp=sharing
 
 [x] Реализована система Unit'ов \
-[] Реализована система Команд \
-[] Реализована система Бота \
+[x] Реализована система Команд \
+[x] Реализована система Бота \
 
 Контакты:\
 https://vk.com/jungletryne \
