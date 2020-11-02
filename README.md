@@ -1,28 +1,20 @@
-# Проект MyLittleHeartstone
-Данный проект является некой пародией на всем известный проект HeartStone.
-Единственное отличие, это просто упрощение механики и правил игры.
+# MyLittleHeartstone Project
+This project is kind of parody of the popular card game.
+More specifically, it is VK bot that allows people to play via the social media website
 
-Ожидается, что игра будет в виде бота для ВКонтакте, однако в силу некоторых
-обстоятельств вполне возможно, что она станет консольной.
-
-Архитектура проекта и сценарий использования представлен на этой 
-UML-диаграмме:
+Project architecture:
 https://drive.google.com/file/d/1urGQSx-RH-O1MI1jQ_XQ0S5f4oSeEw1d/view?usp=sharing
 
-[x] Реализована система Unit'ов \
-[x] Реализована система Команд \
-[x] Реализована система Бота \
-
-Контакты:\
+Contacts:\
 https://vk.com/jungletryne \
 mishin.dk@phystech.edu
 
-**Запуск**
+**How to launch it**
 ```
 python3 main.py
 ```
 
-**Тесты**
+**Tests**
 ```
 python3 tests.py
 ```
