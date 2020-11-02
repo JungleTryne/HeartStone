@@ -1,4 +1,4 @@
-# MyLittleHeartstone Project
+# VKCardStone Project
 This project is kind of parody of the popular card game.
 More specifically, it is VK bot that allows people to play via the social media website
 
