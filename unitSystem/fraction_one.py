@@ -3,11 +3,11 @@ from unitSystem.unit_base import Unit, UnitFabric
 
 class UnitFractionOne(Unit):
     """
-    Класс юнитов первой фракции
-    :param: hp_rate - количество hp карточки
-    :param: attack_rate - урон карточки
-    :param: mana_rate - цена использования карточки
-    :param: card_id уникальный ID карточки
+    First fraction unit class
+    :param: hp_rate - hp rate of the card
+    :param: attack_rate - attack rate of the card
+    :param: mana_rate - price of the card
+    :param: card_id unique card id
     """
     def __init__(self, hp_rate: int, attack_rate: int,
                  mana_rate: int, card_id: int):
